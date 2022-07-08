@@ -132,6 +132,7 @@ total_elementos=$(GET https://api.alternative.me/fng/?limit=$dias | jq -r '.data
 echo "Descripcion_Valor_Fecha" > result.tmp 
 for array in $(seq 0 $(($total_elementos-1))) ; do
 	value_today=$(cat get.tmp  | jq -r ".data | .[$array].value")
+	value_color=$(cat get.tmp  | jq -r ".data | .[0].value")
 	titulo_today=$(cat get.tmp  | jq -r ".data | .[$array].value_classification")
 	time_today=$(cat get.tmp | jq -r  ".data | .[$array].timestamp")
 	date_converted_today=$(date +'%d.%m.%Y' -d @${time_today})
@@ -141,7 +142,12 @@ for array in $(seq 0 $(($total_elementos-1))) ; do
 	echo "${titulo_today}_${value_today}_${date_converted_today}" >> result.tmp
 	#echo -e "$greenColour$titulo_today --> $value_today --  $date_converted_today" | column -t -s 	
 done
-echo -ne "${greenColour}"
+if [ $value_color -ge 48 ] ; then
+	color=${redColour}
+else
+	color=${greenColour}
+fi
+echo -ne "${color}"
 printTable '_' "$(cat result.tmp)"
 echo -ne "${endColour}"
 rm -f get.tmp result.tmp

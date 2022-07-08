@@ -9,7 +9,7 @@ purpleColour="\e[0;35m\033[1m"
 turquoiseColour="\e[0;36m\033[1m"
 grayColour="\e[0;37m\033[1m"
 
-dias=2
+dias=4
 
 function ctrl_c(){
         echo -e "\n${redColour}[!] Saliendo...\n${endColour}"

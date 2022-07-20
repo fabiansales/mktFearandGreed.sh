@@ -2,8 +2,7 @@
 
 Se puede ver de forma rapida el Miedo y la codicia del mercado de criptomonedas, por defecto mostrara los Ultimos 4 dias.
 
-![image](https://user-images.githubusercontent.com/96312218/178051423-27decf17-02c0-496e-9b7d-32bfb967aa90.png)
-
+![image](https://user-images.githubusercontent.com/96312218/180035669-9cfc78eb-b638-456f-9a3d-742981b81227.png)
 
 The crypto market behaviour is very emotional. People tend to get greedy when the market is rising which results in FOMO (Fear of missing out). Also, people often sell their coins in irrational reaction of seeing red numbers. With our Fear and Greed Index, we try to save you from your own emotional overreactions. There are two simple assumptions:
 

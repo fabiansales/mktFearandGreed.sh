@@ -8,6 +8,8 @@ yellowColour="\e[0;33m\033[1m"
 purpleColour="\e[0;35m\033[1m"
 turquoiseColour="\e[0;36m\033[1m"
 grayColour="\e[0;37m\033[1m"
+orangeColour="\033[33m"
+lightgreenColour="\e[92m"
 
 dias=4
 
@@ -134,12 +136,22 @@ for array in $(seq 0 $(($total_elementos-1))) ; do
 	value_today=$(cat get.tmp  | jq -r ".data | .[$array].value")
 	value_color=$(cat get.tmp  | jq -r ".data | .[0].value")
 	titulo_today=$(cat get.tmp  | jq -r ".data | .[$array].value_classification")
+	case ${titulo_today} in
+		"Extreme Fear" )
+		color_start_individual="${orangeColour}" ;;
+		"Fear" )
+		color_start_individual="${yellowColour}" ;;
+		"Greed" )
+		color_start_individual="${lightgreenColour}" ;;
+		"Extreme Greed" )
+		color_start_individual="${greenColour}" ;;
+	esac
 	time_today=$(cat get.tmp | jq -r  ".data | .[$array].timestamp")
 	date_converted_today=$(date +'%d.%m.%Y' -d @${time_today})
 	if [ $date_converted_today == $(date  +"%d.%m.%Y") ] ; then
 		date_converted_today="Hoy/Today"
 	fi
-	echo "${titulo_today}_${value_today}_${date_converted_today}" >> result.tmp
+	echo "${color_start_individual}${titulo_today}_${value_today}_${date_converted_today}${endColour}" >> result.tmp
 	#echo -e "$greenColour$titulo_today --> $value_today --  $date_converted_today" | column -t -s 	
 done
 if [ $value_color -ge 48 ] ; then
@@ -151,4 +163,4 @@ echo -ne "${color}"
 printTable '_' "$(cat result.tmp)"
 echo -ne "${endColour}"
 rm -f get.tmp result.tmp
-tput civis
+tput cnorm

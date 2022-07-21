@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# Author: Fabian Sales
+
 #Colours
 greenColour="\e[0;32m\033[1m"
 endColour="\033[0m\e[0m"
@@ -125,42 +128,59 @@ function trimString(){
     sed 's,^[[:blank:]]*,,' <<< "${string}" | sed 's,[[:blank:]]*$,,'
 }
 
+function helpPanel(){
+	echo -e "\n${redColour}[!] Uso: ./$0${endColour}"
+	echo -e "\n\n\t${grayColour}[-d] ${endColour}${yelowColour}Cantidad de dias a revisar (por defecto muestras desde 4 dias atras)${endColour}"
+	echo -e "\n\n\t${grayColour}[-h] ${endColour}${yelowColour}Muestra el panel de ayuda${endColour}\n"
+}
 
-dependencies
 
-GET https://api.alternative.me/fng/?limit=$dias > get.tmp
-total_elementos=$(GET https://api.alternative.me/fng/?limit=$dias | jq -r '.data | length')
+dependencies ; parameter_counter=0 ; ayuda=0
 
-echo "Descripcion_Valor_Fecha" > result.tmp 
-for array in $(seq 0 $(($total_elementos-1))) ; do
-	value_today=$(cat get.tmp  | jq -r ".data | .[$array].value")
-	value_color=$(cat get.tmp  | jq -r ".data | .[0].value")
-	titulo_today=$(cat get.tmp  | jq -r ".data | .[$array].value_classification")
-	case ${titulo_today} in
-		"Extreme Fear" )
-		color_start_individual="${orangeColour}" ;;
-		"Fear" )
-		color_start_individual="${yellowColour}" ;;
-		"Greed" )
-		color_start_individual="${lightgreenColour}" ;;
-		"Extreme Greed" )
-		color_start_individual="${greenColour}" ;;
+while getopts "d:h" arg ; do
+	case $arg in
+		d) dias=$OPTARG; let parameter_counter+=1 ;;
+		h) helpPanel; ayuda=1; let  parameter_counter+=1 ;;
 	esac
-	time_today=$(cat get.tmp | jq -r  ".data | .[$array].timestamp")
-	date_converted_today=$(date +'%d.%m.%Y' -d @${time_today})
-	if [ $date_converted_today == $(date  +"%d.%m.%Y") ] ; then
-		date_converted_today="Hoy/Today"
-	fi
-	echo "${color_start_individual}${titulo_today}_${value_today}_${date_converted_today}${endColour}" >> result.tmp
-	#echo -e "$greenColour$titulo_today --> $value_today --  $date_converted_today" | column -t -s 	
 done
-if [ $value_color -ge 48 ] ; then
-	color=${redColour}
-else
-	color=${greenColour}
+
+if [ $parameter_counter -le 1 ] && [ "$ayuda" = "0" ]; then
+	GET https://api.alternative.me/fng/?limit=$dias > get.tmp
+	total_elementos=$(GET https://api.alternative.me/fng/?limit=$dias | jq -r '.data | length')
+
+	echo "Descripcion_Valor_Fecha" > result.tmp 
+	for array in $(seq 0 $(($total_elementos-1))) ; do
+		value_today=$(cat get.tmp  | jq -r ".data | .[$array].value")
+		value_color=$(cat get.tmp  | jq -r ".data | .[0].value")
+		titulo_today=$(cat get.tmp  | jq -r ".data | .[$array].value_classification")
+		case ${titulo_today} in
+			"Extreme Fear" )
+			color_start_individual="${orangeColour}" ;;
+			"Fear" )
+			color_start_individual="${yellowColour}" ;;
+			"Greed" )
+			color_start_individual="${lightgreenColour}" ;;
+			"Extreme Greed" )
+			color_start_individual="${greenColour}" ;;
+		esac
+		time_today=$(cat get.tmp | jq -r  ".data | .[$array].timestamp")
+		date_converted_today=$(date +'%d.%m.%Y' -d @${time_today})
+		if [ $date_converted_today == $(date  +"%d.%m.%Y") ] ; then
+			date_converted_today="Hoy/Today"
+		fi
+		echo "${color_start_individual}${titulo_today}_${value_today}_${date_converted_today}${endColour}" >> result.tmp
+		#echo -e "$greenColour$titulo_today --> $value_today --  $date_converted_today" | column -t -s 	
+	done
+	if [ $value_color -ge 48 ] ; then
+		color=${redColour}
+	else
+		color=${greenColour}
+	fi
+	echo -ne "${color}"
+	printTable '_' "$(cat result.tmp)"
+	echo -ne "${endColour}"
+	rm -f get.tmp result.tmp
+	tput cnorm
+#else
+#	helpPanel
 fi
-echo -ne "${color}"
-printTable '_' "$(cat result.tmp)"
-echo -ne "${endColour}"
-rm -f get.tmp result.tmp
-tput cnorm

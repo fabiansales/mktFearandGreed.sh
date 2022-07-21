@@ -130,8 +130,11 @@ function trimString(){
 
 function helpPanel(){
 	echo -e "\n${redColour}[!] Uso: ./$0${endColour}"
+	for i in $(seq 1 80); do echo -ne "${redColour}-"; done; echo -ne "${endColour}"
 	echo -e "\n\n\t${grayColour}[-d] ${endColour}${yelowColour}Cantidad de dias a revisar (por defecto muestras desde 4 dias atras)${endColour}"
-	echo -e "\n\n\t${grayColour}[-h] ${endColour}${yelowColour}Muestra el panel de ayuda${endColour}\n"
+	echo -e "\n\t${grayColour}[-h] ${endColour}${yelowColour}Muestra el panel de ayuda${endColour}\n"
+	echo -e "\n\t\t${redColour}Ejemplo: ${endcolour}${grayColour}./$0 -d 8${endColour}\n"
+	tput cnorm
 }
 
 

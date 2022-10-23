@@ -133,7 +133,7 @@ function helpPanel(){
 	for i in $(seq 1 80); do echo -ne "${redColour}-"; done; echo -ne "${endColour}"
 	echo -e "\n\n\t${grayColour}[-d] ${endColour}${yelowColour}Cantidad de dias a revisar (por defecto muestras desde 4 dias atras)${endColour}"
 	echo -e "\n\t${grayColour}[-h] ${endColour}${yelowColour}Muestra el panel de ayuda${endColour}\n"
-	echo -e "\n\t\t${redColour}Ejemplo: ${endcolour}${grayColour}./$0 -d 8${endColour}\n"
+	echo -e "\n\t\t${redColour}Ejemplo: ${endcolour}${grayColour}$0 -d 8${endColour}\n"
 	tput cnorm
 }
 
@@ -142,8 +142,8 @@ dependencies ; parameter_counter=0 ; ayuda=0
 
 while getopts "d:h" arg ; do
 	case $arg in
-		d) dias=$OPTARG; let parameter_counter+=1 ;;
-		h) helpPanel; ayuda=1; let  parameter_counter+=1 ;;
+		d|dias) dias=$OPTARG; let parameter_counter+=1 ;;
+		h|help) helpPanel; ayuda=1; let  parameter_counter+=1 ;;
 	esac
 done
 

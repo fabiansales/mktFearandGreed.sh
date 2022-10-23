@@ -186,4 +186,5 @@ if [ $parameter_counter -le 1 ] && [ "$ayuda" = "0" ]; then
 	tput cnorm
 #else
 #	helpPanel
+
 fi

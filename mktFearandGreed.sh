@@ -13,6 +13,7 @@ turquoiseColour="\e[0;36m\033[1m"
 grayColour="\e[0;37m\033[1m"
 orangeColour="\033[33m"
 lightgreenColour="\e[92m"
+neutralColour="\e[0;34m\033[1m"
 
 dias=4
 
@@ -165,6 +166,8 @@ if [ $parameter_counter -le 1 ] && [ "$ayuda" = "0" ]; then
 			color_start_individual="${lightgreenColour}" ;;
 			"Extreme Greed" )
 			color_start_individual="${greenColour}" ;;
+			"Neutral" )
+			color_start_individual="${neutralColour}" ;;
 		esac
 		time_today=$(cat get.tmp | jq -r  ".data | .[$array].timestamp")
 		date_converted_today=$(date +'%d.%m.%Y' -d @${time_today})

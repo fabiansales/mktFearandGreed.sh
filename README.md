@@ -15,5 +15,5 @@ The crypto market behaviour is very emotional. People tend to get greedy when th
 Extreme fear can be a sign that investors are too worried. That could be a buying opportunity.
 When Investors are getting too greedy, that means the market is due for a correction.
 
-Therefore, we analyze the current sentiment of the Bitcoin market and crunch the numbers into a simple meter from 0 to 100. Zero means "Extreme Fear", while 100 means "Extreme Greed". See below for further information on our data sources.
+Therefore, we analyze the current sentiment of the Bitcoin market and crunch the numbers into a simple meter from 0 to 100. Zero means "Extreme Fear", while 100 means "Extreme Greed".
 

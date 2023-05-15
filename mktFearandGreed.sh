@@ -152,7 +152,7 @@ if [ $parameter_counter -le 1 ] && [ "$ayuda" = "0" ]; then
 	GET https://api.alternative.me/fng/?limit=${dias} > get.tmp
 	total_elementos=$(GET https://api.alternative.me/fng/?limit=${dias} | jq -r '.data | length')
 
-	echo "Descripcion_Valor_Fecha" > result.tmp 
+	echo "Description_Value_Date" > result.tmp 
 	for array in $(seq 0 $(($total_elementos-1))) ; do
 		value_today=$(cat get.tmp  | jq -r ".data | .[$array].value")
 		value_color=$(cat get.tmp  | jq -r ".data | .[0].value")

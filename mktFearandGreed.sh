@@ -130,7 +130,7 @@ function trimString(){
 }
 
 function helpPanel(){
-	echo -e "\n${redColour}[!] Uso: ./$0${endColour}"
+	echo -e "\n${redColour}[!] Uso: $0${endColour}"
 	for i in $(seq 1 80); do echo -ne "${redColour}-"; done; echo -ne "${endColour}"
 	echo -e "\n\n\t${grayColour}[-d] ${endColour}${yelowColour}Cantidad de dias a revisar (por defecto muestras desde 4 dias atras)${endColour}"
 	echo -e "\n\t${grayColour}[-h] ${endColour}${yelowColour}Muestra el panel de ayuda${endColour}\n"
@@ -149,8 +149,8 @@ while getopts "d:h" arg ; do
 done
 
 if [ $parameter_counter -le 1 ] && [ "$ayuda" = "0" ]; then
-	GET https://api.alternative.me/fng/?limit=$dias > get.tmp
-	total_elementos=$(GET https://api.alternative.me/fng/?limit=$dias | jq -r '.data | length')
+	GET https://api.alternative.me/fng/?limit=${dias} > get.tmp
+	total_elementos=$(GET https://api.alternative.me/fng/?limit=${dias} | jq -r '.data | length')
 
 	echo "Descripcion_Valor_Fecha" > result.tmp 
 	for array in $(seq 0 $(($total_elementos-1))) ; do
